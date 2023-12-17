@@ -1,0 +1,26 @@
+name: .NET7 Docker build test(arm64)
+on: 
+  push:
+    branches: 
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Docker Buildx setup
+      uses: docker/setup-buildx-action@v3
+      with:
+        platforms: linux/arm64,linux/amd64
+
+    - name: Dockerize
+      run: |
+        IMAGE_TAG=baeky/dotnet-docker-build-test:v0.1-arm64
+        ARCH=linux/arm64
+        docker buildx build --platform $ARCH --file ./Dockerfile --output type=docker -t $IMAGE_TAG .
+        docker images $IMAGE_TAG
