@@ -16,7 +16,7 @@ jobs:
     - name: Docker Buildx setup
       uses: docker/setup-buildx-action@v3
       with:
-        platforms: linux/arm64,linux/amd64
+        platforms: linux/arm64
 
     - name: Dockerize
       run: |
